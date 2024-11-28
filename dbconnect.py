@@ -104,7 +104,7 @@ import os
 #         print("Closing DB Pool...")
 #         self.dbPool.close()
 
-class DB_connect():
+class Dbconnect():
     
     connection = None
 
