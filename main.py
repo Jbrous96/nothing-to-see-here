@@ -6,7 +6,7 @@ import pandas as pd
 import pandas_market_calendars as mcal
 import statistics
 import math
-from db_connect import DB_connect
+from db_connect import dbconnect
 
 #%% Global Constants for defaults
 DIVIDEND_YIELD = 0.01
