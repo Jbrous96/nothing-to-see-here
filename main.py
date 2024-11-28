@@ -6,7 +6,7 @@ import pandas as pd
 import pandas_market_calendars as mcal
 import statistics
 import math
-from dbconnect import dbconnect
+from dbconnect import Dbconnect
 
 #%% Global Constants for defaults
 DIVIDEND_YIELD = 0.01
@@ -570,7 +570,7 @@ def get_opt_infos(underlier=UNDERLIER):
     """
     get option info from Database
     """
-    dbconnection = dbconnect()
+    Dbconnection = Dbconnect()
     query = f"""
     select DISTINCT a.trade_dt, b.S_INFO_MATURITYDATE, b.S_INFO_STRIKEPRICE, b.S_INFO_CALLPUT, a.S_DQ_SETTLE, d.S_DQ_CLOSE
     from wind.CHINAOPTIONEODPRICES a, wind.CHINAOPTIONDESCRIPTION b, wind.CHINAOPTIONCONTPRO c， wind.CHINACLOSEDFUNDEODPRICE d
@@ -581,7 +581,7 @@ def get_opt_infos(underlier=UNDERLIER):
     and c.S_INFO_WINDCODE = d.S_INFO_WINDCODE
     order by a.TRADE_DT
     """
-    data = dbconnection.executeSQL(query)
+    data = Dbconnection.executeSQL(query)
     return data
 
 def get_opt_infos_single_day(date='20150420', underlier=UNDERLIER):
@@ -589,7 +589,7 @@ def get_opt_infos_single_day(date='20150420', underlier=UNDERLIER):
     get single-day option info from Database
     :param date: str eg. '20210130'
     """
-    dbconnection = dbconnect()
+    Dbconnection = Dbconnect()
     query = f"""
     select DISTINCT a.trade_dt, b.S_INFO_MATURITYDATE, b.S_INFO_STRIKEPRICE, b.S_INFO_CALLPUT, a.S_DQ_CLOSE, d.S_DQ_CLOSE
     from wind.CHINAOPTIONEODPRICES a, wind.CHINAOPTIONDESCRIPTION b, wind.CHINAOPTIONCONTPRO c， wind.CHINACLOSEDFUNDEODPRICE d
@@ -601,7 +601,7 @@ def get_opt_infos_single_day(date='20150420', underlier=UNDERLIER):
     and c.S_INFO_WINDCODE = d.S_INFO_WINDCODE
     order by a.TRADE_DT
     """
-    data = dbconnection.executeSQL(query)
+    data = Dbconnection.executeSQL(query)
     return data
 
 def get_opt_infos_from_to(from_, to_, underlier=UNDERLIER):
@@ -609,7 +609,7 @@ def get_opt_infos_from_to(from_, to_, underlier=UNDERLIER):
     get single-day option info from Database
     :param date: str eg. '20210130'
     """
-    dbconnection = dbconnect()
+    Dbconnection = Dbconnect()
     query = f"""
     select DISTINCT a.trade_dt, b.S_INFO_MATURITYDATE, b.S_INFO_STRIKEPRICE, b.S_INFO_CALLPUT, a.S_DQ_CLOSE, d.S_DQ_CLOSE
     from wind.CHINAOPTIONEODPRICES a, wind.CHINAOPTIONDESCRIPTION b, wind.CHINAOPTIONCONTPRO c， wind.CHINACLOSEDFUNDEODPRICE d
@@ -621,14 +621,14 @@ def get_opt_infos_from_to(from_, to_, underlier=UNDERLIER):
     and c.S_INFO_WINDCODE = d.S_INFO_WINDCODE
     order by a.TRADE_DT
     """
-    data = dbconnection.executeSQL(query)
+    data = Dbconnection.executeSQL(query)
     return data
 
 def get_dates(underlier=UNDERLIER):
     """
     get all dates from Database
     """
-    dbconnection = dbconnect()
+    Dbconnection = Dbconnect()
     query = f"""
     select DISTINCT a.trade_dt
     from wind.CHINAOPTIONEODPRICES a, wind.CHINAOPTIONDESCRIPTION b, wind.CHINAOPTIONCONTPRO c， wind.CHINACLOSEDFUNDEODPRICE d
@@ -639,7 +639,7 @@ def get_dates(underlier=UNDERLIER):
     and c.S_INFO_WINDCODE = d.S_INFO_WINDCODE
     order by a.TRADE_DT
     """
-    data = dbconnection.executeSQL(query)
+    data = Dbconnection.executeSQL(query)
     res = []
     for row in data:
         res.append(row[0])
@@ -649,7 +649,7 @@ def get_dates_from_to(from_, to_, underlier=UNDERLIER):
     """
     get all dates from Database
     """
-    dbconnection = dbconnect()
+    Dbconnection = Dbconnect()
     query = f"""
     select DISTINCT a.trade_dt
     from wind.CHINAOPTIONEODPRICES a, wind.CHINAOPTIONDESCRIPTION b, wind.CHINAOPTIONCONTPRO c， wind.CHINACLOSEDFUNDEODPRICE d
@@ -661,7 +661,7 @@ def get_dates_from_to(from_, to_, underlier=UNDERLIER):
     and c.S_INFO_WINDCODE = d.S_INFO_WINDCODE
     order by a.TRADE_DT
     """
-    data = dbconnection.executeSQL(query)
+    data = Dbconnection.executeSQL(query)
     res = []
     for row in data:
         res.append(row[0])
@@ -669,7 +669,7 @@ def get_dates_from_to(from_, to_, underlier=UNDERLIER):
 
 def get_opt_underlier_spot_price_from_to(from_, to_, underlier=UNDERLIER):
     """ underlier spot price """
-    dbconnection = dbconnect()
+    Dbconnection = Dbconnect()
     query = f"""
     select DISTINCT a.trade_dt, d.S_DQ_CLOSE
     from wind.CHINAOPTIONEODPRICES a, wind.CHINAOPTIONDESCRIPTION b, wind.CHINAOPTIONCONTPRO c， wind.CHINACLOSEDFUNDEODPRICE d
@@ -681,7 +681,7 @@ def get_opt_underlier_spot_price_from_to(from_, to_, underlier=UNDERLIER):
     and c.S_INFO_WINDCODE = d.S_INFO_WINDCODE
     order by a.TRADE_DT
     """
-    data = dbconnection.executeSQL(query)
+    data = Dbconnection.executeSQL(query)
     res = []
     for row in data:
         res.append(row[1])
@@ -689,7 +689,7 @@ def get_opt_underlier_spot_price_from_to(from_, to_, underlier=UNDERLIER):
 
 def get_opt_underlier_spot_price(underlier=UNDERLIER):
     """ underlier spot price """
-    dbconnection = dbconnect()
+    Dbconnection = Dbconnect()
     query = f"""
     select DISTINCT a.trade_dt, d.S_DQ_CLOSE
     from wind.CHINAOPTIONEODPRICES a, wind.CHINAOPTIONDESCRIPTION b, wind.CHINAOPTIONCONTPRO c， wind.CHINACLOSEDFUNDEODPRICE d
@@ -700,7 +700,7 @@ def get_opt_underlier_spot_price(underlier=UNDERLIER):
     and c.S_INFO_WINDCODE = d.S_INFO_WINDCODE
     order by a.TRADE_DT
     """
-    data = dbconnection.executeSQL(query)
+    data = Dbconnection.executeSQL(query)
     res = []
     for row in data:
         res.append(row[1])
@@ -708,14 +708,14 @@ def get_opt_underlier_spot_price(underlier=UNDERLIER):
 
 def get_contracts(underlier=UNDERLIER):
     """ contract info """
-    dbconnection = dbconnect()
+    Dbconnection = Dbconnect()
     query = f"""
     SELECT b.S_INFO_WINDCODE, b.S_INFO_MATURITYDATE, b.S_INFO_STRIKEPRICE, b.S_INFO_CALLPUT 
     FROM wind.CHINAOPTIONDESCRIPTION b, wind.CHINAOPTIONCONTPRO c 
     WHERE b.S_INFO_SCCODE = c.S_INFO_CODE
     and c.S_INFO_WINDCODE = '{underlier}'
     """
-    data = dbconnection.executeSQL(query)
+    data = Dbconnection.executeSQL(query)
     return data
 
 #%% Read CSV APIs
